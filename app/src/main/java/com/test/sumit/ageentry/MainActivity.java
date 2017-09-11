@@ -16,11 +16,10 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Integer> mID;
     private List<Integer> mAGE;
-
-    private static final long TIME_INTERVAL = 2000;
-
     ArrayAdapter adapterAge;
     ArrayAdapter adapterID;
+
+    private static final long TIME_INTERVAL = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         adapterAge = new ArrayAdapter<Integer>(this,
                 R.layout.textview, mAGE);
 
+        // listview for person id field
         ListView listViewId = (ListView) findViewById(R.id.personId);
+        // listview for person age field
         ListView listViewAge = (ListView) findViewById(R.id.personAge);
 
         // setting adapter for id and age listview columns
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void addEntry() {
         Timer newTimer = new Timer();
+
+        // using timer task to run a task after an interval
+        // here the interval is TIME_INTERVAL and the starting time for
+        // recurring task is current time
         newTimer.scheduleAtFixedRate(new TimerTask() {
             Integer id= 1;
             @Override
@@ -60,8 +65,14 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        // increment id after every addition to listview
                         mID.add(id++);
+                        // using age range of 10-40 years for demo purpose
+                        // can be set as constants and changed accordingly
+                        // here we choose a random age between 10 to 40 years
                         mAGE.add(new Random().nextInt(40-10)+10);
+                        // notify the listview about change in dataset to update
+                        // the views which is called on uithread
                         adapterAge.notifyDataSetChanged();
                         adapterID.notifyDataSetChanged();
                     }
