@@ -14,9 +14,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Integer[] mId= new Integer[]{1,2,3,4,5,6,7,8,9,10};
     private List<Integer> mID;
-    private Integer[] mAge = new Integer[]{10,40,20,30,22,12,27,19,16,33};
     private List<Integer> mAGE;
 
     private static final long TIME_INTERVAL = 2000;
@@ -32,28 +30,31 @@ public class MainActivity extends AppCompatActivity {
 
         mID = new ArrayList<>();
         mAGE = new ArrayList<>();
+        // initialiseing list so as the adapter finds an entry onCreating the listview
         mID.add(0);
         mAGE.add(11);
 
-        ListView listViewId = (ListView) findViewById(R.id.personId);
         adapterID = new ArrayAdapter<Integer>(this,
                 R.layout.textview, mID);
         adapterAge = new ArrayAdapter<Integer>(this,
                 R.layout.textview, mAGE);
 
+        ListView listViewId = (ListView) findViewById(R.id.personId);
         ListView listViewAge = (ListView) findViewById(R.id.personAge);
-        listViewAge.setAdapter(adapterAge);
+
+        // setting adapter for id and age listview columns
         listViewId.setAdapter(adapterID);
+        listViewAge.setAdapter(adapterAge);
+
+        // adds entry into id and age after 2 seconds
         addEntry();
 
     }
 
     private void addEntry() {
-        long curr_time = System.currentTimeMillis();
         Timer newTimer = new Timer();
         newTimer.scheduleAtFixedRate(new TimerTask() {
-            Integer id= 0;
-            Integer age = 10;
+            Integer id= 1;
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
